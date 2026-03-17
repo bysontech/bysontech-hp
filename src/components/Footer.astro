@@ -1,0 +1,21 @@
+---
+import { site } from '../content/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-gray-400 mt-16">
+  <div class="max-w-5xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div>
+      <p class="text-white font-semibold">{site.name}</p>
+      <p class="text-sm mt-1">{site.tagline}</p>
+    </div>
+    <nav class="flex flex-wrap gap-4 text-sm">
+      {site.nav.map((item) => (
+        <a href={item.href} class="hover:text-white">{item.label}</a>
+      ))}
+    </nav>
+  </div>
+  <div class="border-t border-gray-800 text-center py-4 text-xs">
+    &copy; {year} {site.name}. All rights reserved.
+  </div>
+</footer>

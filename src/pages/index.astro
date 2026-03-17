@@ -1,18 +1,44 @@
 ---
-// Template A: Static Content (Cloudflare Pages + Astro + TailwindCSS)
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import { site } from '../content/site';
+import { services } from '../content/services';
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Template A - Static Content</title>
-  </head>
-  <body class="min-h-screen bg-gray-100 flex items-center justify-center">
-    <main class="text-center p-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-4">Template A</h1>
-      <p class="text-gray-600">Static content site powered by Astro + TailwindCSS</p>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <!-- Hero -->
+  <section class="bg-gray-50 py-20">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">{site.tagline}</h1>
+      <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">{site.description}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact/" class="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded hover:bg-blue-700 transition-colors">
+          お問い合わせ
+        </a>
+        <a href="/services/" class="inline-block border border-gray-300 text-gray-700 font-semibold px-8 py-3 rounded hover:bg-gray-100 transition-colors">
+          サービス一覧
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services overview -->
+  <section class="py-16">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center mb-10">サービス概要</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {services.map((s) => (
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="font-semibold text-lg mb-2">{s.title}</h3>
+            <p class="text-gray-600 text-sm">{s.description}</p>
+          </div>
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href="/services/" class="text-blue-600 hover:underline text-sm font-medium">サービス詳細を見る →</a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

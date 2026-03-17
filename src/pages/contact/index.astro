@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { contactInfo } from '../../content/contact';
+---
+
+<BaseLayout title="お問い合わせ" description="BysonTechへのお問い合わせはこちらから。フォームまたはメールにてご連絡ください。">
+  <section class="py-16">
+    <div class="max-w-2xl mx-auto px-4">
+      <h1 class="text-3xl font-bold mb-4">{contactInfo.title}</h1>
+      <p class="text-gray-600 mb-10">{contactInfo.description}</p>
+
+      <div class="flex flex-col gap-6">
+        <!-- External form link -->
+        <div class="border border-gray-200 rounded-lg p-8 text-center">
+          <h2 class="font-semibold text-lg mb-3">お問い合わせフォーム</h2>
+          <p class="text-gray-600 text-sm mb-6">下記ボタンから外部フォームへ移動します。</p>
+          <a
+            href={contactInfo.formUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded hover:bg-blue-700 transition-colors"
+          >
+            フォームを開く（外部サイト）
+          </a>
+        </div>
+
+        <!-- Email -->
+        <div class="border border-gray-200 rounded-lg p-8 text-center">
+          <h2 class="font-semibold text-lg mb-3">メールでのお問い合わせ</h2>
+          <a
+            href={`mailto:${contactInfo.email}`}
+            class="text-blue-600 hover:underline text-sm"
+          >
+            {contactInfo.email}
+          </a>
+        </div>
+      </div>
+
+      <p class="text-sm text-gray-500 mt-8 text-center">{contactInfo.note}</p>
+    </div>
+  </section>
+</BaseLayout>

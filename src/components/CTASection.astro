@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  title = 'まずはご相談ください',
+  description = 'プロジェクトの規模を問わず、お気軽にお問い合わせください。',
+  ctaLabel = 'お問い合わせ',
+  ctaHref = '/contact/',
+} = Astro.props;
+---
+
+<section class="bg-blue-600 text-white py-14">
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <h2 class="text-2xl font-bold mb-3">{title}</h2>
+    <p class="mb-6 text-blue-100">{description}</p>
+    <a
+      href={ctaHref}
+      class="inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded hover:bg-blue-50 transition-colors"
+    >
+      {ctaLabel}
+    </a>
+  </div>
+</section>
