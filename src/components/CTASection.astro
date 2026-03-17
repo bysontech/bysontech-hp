@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+}
+
+const {
+  title = 'まずはお気軽にご相談ください',
+  description = '要件が固まっていなくてもOKです。課題感からのご相談もお待ちしています。',
+  primaryLabel = 'お問い合わせはこちら',
+  primaryHref = '/contact/',
+} = Astro.props;
+---
+
+<section class="bg-blue-50 border-t border-blue-100 mt-16">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <h2 class="text-2xl font-bold text-gray-900 mb-3">{title}</h2>
+    <p class="text-gray-600 mb-6">{description}</p>
+    <a
+      href={primaryHref}
+      class="inline-block bg-blue-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+    >
+      {primaryLabel}
+    </a>
+  </div>
+</section>
