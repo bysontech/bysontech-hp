@@ -1,61 +1,89 @@
 ---
-import { site } from '../content/site';
+import { getSiteContent } from '../lib/content';
+import { getAlternatePath } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
 
-const navLinks = [
-  { label: 'ホーム', href: '/' },
-  { label: 'サービス', href: '/services/' },
-  { label: '料金', href: '/pricing/' },
-  { label: 'FAQ', href: '/faq/' },
-  { label: 'お問い合わせ', href: '/contact/' },
-];
+const locale = (Astro.currentLocale ?? 'en') as Locale;
+const site = getSiteContent(locale);
+
+const navLinks =
+  locale === 'en'
+    ? [
+        { label: 'Home', href: '/' },
+        { label: 'Services', href: '/services/' },
+        { label: 'Pricing', href: '/pricing/' },
+        { label: 'FAQ', href: '/faq/' },
+        { label: 'Contact', href: '/contact/' },
+      ]
+    : [
+        { label: 'ホーム', href: '/ja/' },
+        { label: 'サービス', href: '/ja/services/' },
+        { label: '料金', href: '/ja/pricing/' },
+        { label: 'FAQ', href: '/ja/faq/' },
+        { label: 'お問い合わせ', href: '/ja/contact/' },
+      ];
 
 const currentPath = Astro.url.pathname;
+const alternatePath = getAlternatePath(currentPath, locale);
+const alternateLocale = locale === 'en' ? 'ja' : 'en';
+const alternateLabel = locale === 'en' ? '日本語' : 'English';
 ---
 
-<header class="border-b border-gray-200 bg-white">
+<header class="border-b border-gray-200 bg-white sticky top-0 z-50">
   <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-    <a href="/" class="font-bold text-xl text-gray-900 hover:text-blue-600">
+    <a href={locale === 'en' ? '/' : '/ja/'} class="font-bold text-xl tracking-tight text-gray-900 hover:text-blue-600 transition-colors">
       {site.siteName}
     </a>
 
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-6">
-      {
-        navLinks.map((link) => (
-          <a
-            href={link.href}
-            class={`text-sm font-medium transition-colors hover:text-blue-600 ${
-              currentPath === link.href || currentPath === link.href.replace(/\/$/, '')
-                ? 'text-blue-600'
-                : 'text-gray-600'
-            }`}
-          >
-            {link.label}
-          </a>
-        ))
-      }
-    </nav>
+    <div class="flex items-center gap-4">
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-6">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                currentPath === link.href || currentPath === link.href.replace(/\/$/, '')
+                  ? 'text-blue-600'
+                  : 'text-gray-600'
+              }`}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
 
-    <!-- Mobile menu button -->
-    <button
-      id="mobile-menu-btn"
-      class="md:hidden p-2 text-gray-600 hover:text-gray-900"
-      aria-label="メニューを開く"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-    >
-      <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
+      <!-- Language switcher -->
+      <a
+        href={alternatePath}
+        class="hidden md:inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded border border-gray-300 text-gray-500 hover:border-blue-400 hover:text-blue-600 transition-colors"
+        title={`Switch to ${alternateLabel}`}
+      >
+        {alternateLabel}
+      </a>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 text-gray-600 hover:text-gray-900"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
   </div>
 
   <!-- Mobile menu -->
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-200">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col gap-3">
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-200 bg-white">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-3">
       {
         navLinks.map((link) => (
           <a
@@ -68,6 +96,12 @@ const currentPath = Astro.url.pathname;
           </a>
         ))
       }
+      <a
+        href={alternatePath}
+        class="text-sm font-medium py-1 text-gray-400 hover:text-blue-600 transition-colors"
+      >
+        {alternateLabel}
+      </a>
     </div>
   </nav>
 </header>

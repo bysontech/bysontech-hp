@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CTASection from '../CTASection.astro';
+import { getServicesContent } from '../../lib/content';
+import type { Locale } from '../../lib/i18n';
+
+const locale = (Astro.currentLocale ?? 'en') as Locale;
+const services = getServicesContent(locale);
+
+const contactHref = locale === 'en' ? '/contact/' : '/ja/contact/';
+const servicesHref = locale === 'en' ? '/services/' : '/ja/services/';
+
+const hero =
+  locale === 'en'
+    ? {
+        headline: 'Ship Your PoC in Weeks,\nNot Months.',
+        sub: 'BysonTech builds lean proof-of-concepts for small businesses — template-driven, clearly scoped, and affordable. Get something working fast.',
+        cta1: 'View Services',
+        cta2: 'Talk to Us',
+      }
+    : {
+        headline: '小規模DXの第一歩を、\n短期・低コストで。',
+        sub: 'BysonTechは、PoCに特化した開発サービスとテンプレートを提供します。まず動くものを作り、DX推進の手がかりをつかみましょう。',
+        cta1: 'サービスを見る',
+        cta2: 'まずは相談する',
+      };
+
+const pointsSection =
+  locale === 'en'
+    ? {
+        heading: 'Why BysonTech',
+        points: [
+          { icon: '⚡', title: 'Fast Delivery', desc: 'Template-driven builds targeting 2–4 weeks for typical PoC scope.' },
+          { icon: '💰', title: 'Affordable', desc: 'Minimal scope = minimal cost. No feature bloat, no surprise invoices.' },
+          { icon: '📦', title: 'Template-Driven', desc: "We don't reinvent the wheel. Proven templates, adapted to your use case." },
+          { icon: '🎯', title: 'Clear Scope', desc: 'No maintenance, no unlimited revisions. What\'s included is defined upfront.' },
+        ],
+      }
+    : {
+        heading: 'BysonTechの特徴',
+        points: [
+          { icon: '⚡', title: '短期納品', desc: 'テンプレートベースで2〜4週間を目安に動くものを届けます。' },
+          { icon: '💰', title: '低コスト', desc: 'PoCに必要な最小構成に絞ることで、コストを抑えます。' },
+          { icon: '📦', title: 'テンプレート活用', desc: '用途別テンプレートを活用し、車輪の再発明をしません。' },
+          { icon: '🎯', title: 'スコープ明確', desc: '保守・無制限修正は含まず、最初から範囲を明示します。' },
+        ],
+      };
+
+const servicesSection =
+  locale === 'en'
+    ? { heading: 'Services', sub: 'Two ways to work with us' }
+    : { heading: '提供サービス', sub: '2つの形態でPoC推進を支援します' };
+
+const detailLabel = locale === 'en' ? 'Learn more →' : '詳細を見る →';
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="bg-gray-950 text-white">
+    <div class="max-w-5xl mx-auto px-4 py-24 md:py-32">
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-5 whitespace-pre-line">
+        {hero.headline}
+      </h1>
+      <p class="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl leading-relaxed">
+        {hero.sub}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href={servicesHref} class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-semibold px-7 py-3 rounded-lg transition-colors text-center">
+          {hero.cta1}
+        </a>
+        <a href={contactHref} class="inline-block border border-gray-600 hover:border-gray-300 text-gray-300 hover:text-white font-medium px-7 py-3 rounded-lg transition-colors text-center">
+          {hero.cta2}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services overview -->
+  <section class="max-w-5xl mx-auto px-4 py-20">
+    <h2 class="text-2xl font-bold mb-1">{servicesSection.heading}</h2>
+    <p class="text-gray-500 mb-10">{servicesSection.sub}</p>
+    <div class="grid md:grid-cols-2 gap-6">
+      {services.map((service) => (
+        <div class="border border-gray-200 rounded-xl p-6 hover:shadow-md hover:border-gray-300 transition-all">
+          <h3 class="text-lg font-bold mb-2">{service.name}</h3>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">{service.summary}</p>
+          <p class="text-blue-600 font-medium text-sm">{service.priceRange}</p>
+          <a href={servicesHref} class="inline-block mt-4 text-sm text-blue-600 hover:underline">
+            {detailLabel}
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Why BysonTech -->
+  <section class="bg-gray-50 border-y border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 py-16">
+      <h2 class="text-2xl font-bold mb-12 text-center">{pointsSection.heading}</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {pointsSection.points.map((item) => (
+          <div class="text-center">
+            <div class="text-3xl mb-3">{item.icon}</div>
+            <h3 class="font-bold mb-1">{item.title}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

@@ -1,18 +1,37 @@
 ---
-import { site } from '../content/site';
+import { getSiteContent } from '../lib/content';
+import type { Locale } from '../lib/i18n';
 
-const navLinks = [
-  { label: 'ホーム', href: '/' },
-  { label: 'サービス', href: '/services/' },
-  { label: '料金', href: '/pricing/' },
-  { label: 'FAQ', href: '/faq/' },
-  { label: 'お問い合わせ', href: '/contact/' },
-];
+const locale = (Astro.currentLocale ?? 'en') as Locale;
+const site = getSiteContent(locale);
 
-const legalLinks = [
-  { label: '利用規約', href: '#' },
-  { label: 'プライバシーポリシー', href: '#' },
-];
+const navLinks =
+  locale === 'en'
+    ? [
+        { label: 'Home', href: '/' },
+        { label: 'Services', href: '/services/' },
+        { label: 'Pricing', href: '/pricing/' },
+        { label: 'FAQ', href: '/faq/' },
+        { label: 'Contact', href: '/contact/' },
+      ]
+    : [
+        { label: 'ホーム', href: '/ja/' },
+        { label: 'サービス', href: '/ja/services/' },
+        { label: '料金', href: '/ja/pricing/' },
+        { label: 'FAQ', href: '/ja/faq/' },
+        { label: 'お問い合わせ', href: '/ja/contact/' },
+      ];
+
+const legalLinks =
+  locale === 'en'
+    ? [
+        { label: 'Terms of Use', href: '#' },
+        { label: 'Privacy Policy', href: '#' },
+      ]
+    : [
+        { label: '利用規約', href: '#' },
+        { label: 'プライバシーポリシー', href: '#' },
+      ];
 
 const year = new Date().getFullYear();
 ---
@@ -26,7 +45,7 @@ const year = new Date().getFullYear();
       </div>
       <nav class="flex flex-wrap gap-x-6 gap-y-2">
         {navLinks.map((link) => (
-          <a href={link.href} class="text-sm text-gray-600 hover:text-blue-600">
+          <a href={link.href} class="text-sm text-gray-600 hover:text-blue-600 transition-colors">
             {link.label}
           </a>
         ))}
@@ -36,7 +55,7 @@ const year = new Date().getFullYear();
       <p>&copy; {year} {site.siteName}. All rights reserved.</p>
       <div class="flex gap-4">
         {legalLinks.map((link) => (
-          <a href={link.href} class="hover:text-gray-600">
+          <a href={link.href} class="hover:text-gray-600 transition-colors">
             {link.label}
           </a>
         ))}
