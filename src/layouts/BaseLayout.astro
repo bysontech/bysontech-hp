@@ -1,7 +1,8 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../content/site';
+import { getSiteContent } from '../lib/content';
+import type { Locale } from '../lib/i18n';
 
 interface Props {
   title?: string;
@@ -9,13 +10,16 @@ interface Props {
   ogImage?: string;
 }
 
+const locale = (Astro.currentLocale ?? 'en') as Locale;
+const site = getSiteContent(locale);
+
 const {
   title,
   description = site.defaultDescription,
   ogImage = site.ogImage,
 } = Astro.props;
 
-const pageTitle = title ? `${title} | ${site.siteName}` : `${site.siteName} - ${site.tagline}`;
+const pageTitle = title ? `${title} | ${site.siteName}` : `${site.siteName} — ${site.tagline}`;
 const canonicalURL = new URL(Astro.url.pathname, site.baseUrl);
 ---
 
@@ -40,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, site.baseUrl);
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
   </head>
-  <body class="min-h-screen flex flex-col bg-white text-gray-800">
+  <body class="min-h-screen flex flex-col bg-white text-gray-800 antialiased">
     <Header />
     <main class="flex-1">
       <slot />

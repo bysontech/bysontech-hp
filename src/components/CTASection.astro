@@ -1,4 +1,6 @@
 ---
+import type { Locale } from '../lib/i18n';
+
 interface Props {
   title?: string;
   description?: string;
@@ -6,21 +8,38 @@ interface Props {
   primaryHref?: string;
 }
 
+const locale = (Astro.currentLocale ?? 'en') as Locale;
+
+const defaults =
+  locale === 'en'
+    ? {
+        title: 'Ready to get started?',
+        description: 'Rough requirements are fine. Reach out and we\'ll figure out the scope together.',
+        primaryLabel: 'Get in touch',
+        primaryHref: '/contact/',
+      }
+    : {
+        title: 'まずはお気軽にご相談ください',
+        description: '要件が固まっていなくてもOKです。課題感だけでもお気軽にどうぞ。',
+        primaryLabel: 'お問い合わせはこちら',
+        primaryHref: '/ja/contact/',
+      };
+
 const {
-  title = 'まずはお気軽にご相談ください',
-  description = '要件が固まっていなくてもOKです。課題感からのご相談もお待ちしています。',
-  primaryLabel = 'お問い合わせはこちら',
-  primaryHref = '/contact/',
+  title = defaults.title,
+  description = defaults.description,
+  primaryLabel = defaults.primaryLabel,
+  primaryHref = defaults.primaryHref,
 } = Astro.props;
 ---
 
 <section class="bg-blue-50 border-t border-blue-100 mt-16">
-  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+  <div class="max-w-5xl mx-auto px-4 py-14 text-center">
     <h2 class="text-2xl font-bold text-gray-900 mb-3">{title}</h2>
-    <p class="text-gray-600 mb-6">{description}</p>
+    <p class="text-gray-600 mb-6 max-w-lg mx-auto">{description}</p>
     <a
       href={primaryHref}
-      class="inline-block bg-blue-600 text-white font-medium px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+      class="inline-block bg-blue-600 text-white font-medium px-7 py-3 rounded-lg hover:bg-blue-700 transition-colors"
     >
       {primaryLabel}
     </a>

@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CTASection from '../CTASection.astro';
+import { getFaqContent } from '../../lib/content';
+import type { Locale } from '../../lib/i18n';
+
+const locale = (Astro.currentLocale ?? 'en') as Locale;
+const { items, categories } = getFaqContent(locale);
+
+const ui =
+  locale === 'en'
+    ? {
+        title: 'FAQ',
+        description: 'Frequently asked questions about BysonTech — services, PoC development, templates, and contracts.',
+        intro: "Can't find your answer here?",
+        introLink: 'Reach out directly.',
+        introHref: '/contact/',
+        ctaTitle: "Still have questions?",
+        ctaDesc: 'Send us a message and we\'ll get back to you within 2–3 business days.',
+      }
+    : {
+        title: 'よくある質問',
+        description: 'BysonTechのよくある質問。サービス全般、PoC開発、テンプレート、契約・支払いについてまとめています。',
+        intro: 'ご不明な点が解決しない場合は',
+        introLink: 'お問い合わせ',
+        introHref: '/ja/contact/',
+        ctaTitle: 'まだ疑問が残る場合は',
+        ctaDesc: 'お気軽にお問い合わせください。',
+      };
+---
+
+<BaseLayout title={ui.title} description={ui.description}>
+  <div class="max-w-3xl mx-auto px-4 py-14">
+    <h1 class="text-3xl font-bold mb-2">{ui.title}</h1>
+    <p class="text-gray-500 mb-12">
+      {ui.intro}
+      {' '}
+      <a href={ui.introHref} class="text-blue-600 hover:underline">{ui.introLink}</a>
+      {locale === 'ja' ? 'ください。' : ''}
+    </p>
+
+    {
+      categories.map((category) => (
+        <section class="mb-12">
+          <h2 class="text-lg font-bold mb-4 pb-2 border-b border-gray-200 text-gray-700">{category}</h2>
+          <div class="space-y-2">
+            {items
+              .filter((item) => item.category === category)
+              .map((item) => (
+                <details class="border border-gray-200 rounded-xl group">
+                  <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-gray-800 hover:bg-gray-50 rounded-xl list-none select-none">
+                    <span class="leading-snug">{item.question}</span>
+                    <svg
+                      class="w-5 h-5 text-gray-400 shrink-0 ml-3 transition-transform duration-200 group-open:rotate-180"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </summary>
+                  <div class="px-4 pb-4 pt-1 text-sm text-gray-600 leading-relaxed">
+                    {item.answer}
+                  </div>
+                </details>
+              ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <CTASection title={ui.ctaTitle} description={ui.ctaDesc} />
+</BaseLayout>
