@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { contactMethods, contactNote } from '../../content/contact';
+
+const pageTitle = 'お問い合わせ';
+const pageDescription =
+  'BysonTechへのお問い合わせ。メール・Upwork・LinkedInからご連絡ください。';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="max-w-3xl mx-auto px-4 py-14">
+    <h1 class="text-3xl font-bold mb-2">お問い合わせ</h1>
+    <p class="text-gray-500 mb-10">
+      以下のいずれかの方法でご連絡ください。<br />
+      要件が固まっていなくても、課題感だけでもお気軽にどうぞ。
+    </p>
+
+    <div class="space-y-4 mb-10">
+      {
+        contactMethods.map((method) => (
+          <a
+            href={method.url}
+            target={method.external ? '_blank' : undefined}
+            rel={method.external ? 'noopener noreferrer' : undefined}
+            class="flex items-start gap-4 p-5 border border-gray-200 rounded-xl hover:border-blue-400 hover:shadow-sm transition-all group"
+          >
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-bold text-gray-800 group-hover:text-blue-600">{method.label}</span>
+                {method.external && (
+                  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                )}
+              </div>
+              <p class="text-sm text-gray-500">{method.description}</p>
+            </div>
+            <svg class="w-5 h-5 text-gray-300 group-hover:text-blue-400 self-center shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="text-xs text-gray-400 bg-gray-50 rounded-lg p-3">{contactNote}</p>
+  </div>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import { site } from '../content/site';
+
+const navLinks = [
+  { label: 'ホーム', href: '/' },
+  { label: 'サービス', href: '/services/' },
+  { label: '料金', href: '/pricing/' },
+  { label: 'FAQ', href: '/faq/' },
+  { label: 'お問い合わせ', href: '/contact/' },
+];
+
+const legalLinks = [
+  { label: '利用規約', href: '#' },
+  { label: 'プライバシーポリシー', href: '#' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-gray-200 bg-gray-50 mt-16">
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <div class="flex flex-col md:flex-row md:justify-between gap-6">
+      <div>
+        <p class="font-bold text-gray-900">{site.siteName}</p>
+        <p class="text-sm text-gray-500 mt-1 max-w-xs">{site.tagline}</p>
+      </div>
+      <nav class="flex flex-wrap gap-x-6 gap-y-2">
+        {navLinks.map((link) => (
+          <a href={link.href} class="text-sm text-gray-600 hover:text-blue-600">
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+    <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row sm:justify-between gap-3 text-xs text-gray-400">
+      <p>&copy; {year} {site.siteName}. All rights reserved.</p>
+      <div class="flex gap-4">
+        {legalLinks.map((link) => (
+          <a href={link.href} class="hover:text-gray-600">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>
