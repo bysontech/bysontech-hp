@@ -17,24 +17,22 @@ cycle: 01
 ## タスク一覧
 
 ### 1. コンテンツデータの作成
-- [ ] `src/content/site.ts` を作成
+- [ ] `src/site-content/en/` と `ja/` 配下に各ファイルを作成（例: `en/site.ts`, `ja/site.ts`）
   - [ ] siteName
   - [ ] defaultDescription
   - [ ] ogImage
   - [ ] lang
-- [ ] `src/content/services.ts` を作成
-  - [ ] PoC開発サービス定義
-  - [ ] テンプレート販売サービス定義
-- [ ] `src/content/pricing.ts` を作成
+- [ ] `services.ts`（各ロケール）
+- [ ] `pricing.ts`（各ロケール）
   - [ ] プラン定義
   - [ ] features
   - [ ] notIncluded
   - [ ] disclaimer
-- [ ] `src/content/faq.ts` を作成
+- [ ] `faq.ts`（各ロケール）
   - [ ] category
   - [ ] question
   - [ ] answer
-- [ ] `src/content/contact.ts` を作成
+- [ ] `contact.ts`（各ロケール）
   - [ ] method
   - [ ] label
   - [ ] url
@@ -102,13 +100,13 @@ cycle: 01
 ## 受け入れ条件
 - 5ページが表示できる
 - 共通レイアウトが適用されている
-- コンテンツが `src/content/` に分離されている
+- コンテンツが `src/site-content/` に分離されている
 - 最小JSで必要機能のみ動く
 - スコープ外機能が入っていない
 - 既存構成を壊していない
 
 ## 実装順の推奨
-1. `src/content/` の定義
+1. `src/site-content/` の定義
 2. レイアウト / 共通コンポーネント
 3. Top → Services → Pricing → FAQ → Contact
 4. レスポンシブ調整
@@ -128,7 +126,7 @@ bysontech-hp の基本設計:
 - FAQ `/faq/`
 - Contact `/contact/`
 - 共通コンポーネント: Header / Footer / CTA Section / SEO Head
-- コンテンツは `src/content/services.ts`, `pricing.ts`, `faq.ts`, `contact.ts`, `site.ts` に分離
+- コンテンツは `src/site-content/{en,ja}/` 以下の `services.ts`, `pricing.ts`, `faq.ts`, `contact.ts`, `site.ts` に分離
 - FAQ開閉は `details` / `summary` または最小JS
 - モバイルメニューは最小JS
 - 静的サイトのため API 不要

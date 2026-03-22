@@ -7,26 +7,26 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "eslint . --ext .js,.ts,.astro --max-warnings 0",
-    "lint:fix": "eslint . --ext .js,.ts,.astro --fix",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
     "typecheck": "astro check",
     "test": "echo \"No tests configured\" && exit 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "astro": "^4.16.0",
-    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.18.1",
     "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^1.2.0",
+    "@astrojs/check": "^0.9.8",
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-astro": "^1.6.0",
     "prettier": "^3.3.0",
     "prettier-plugin-astro": "^0.14.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.18.0"
   }
 }

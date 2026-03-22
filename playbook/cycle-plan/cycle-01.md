@@ -19,7 +19,7 @@ Astroベースの静的コーポレートサイトとして、基本設計で定
 - Astroプロジェクトの基本ページ構成作成
 - 共通レイアウトの実装
 - Header / Footer / CTA Section / SEO Head の共通化
-- `src/content/` 配下の静的データ定義
+- `src/site-content/` 配下の静的データ定義
 - Top / Services / Pricing / FAQ / Contact の5ページ実装
 - FAQの開閉実装（`details` / `summary` 優先）
 - モバイルメニューの最小実装
@@ -42,18 +42,18 @@ Astroベースの静的コーポレートサイトとして、基本設計で定
 
 ## 実装方針
 - 静的サイト前提で最小構成を優先する
-- コンテンツは `src/content/*.ts` に集約する
+- コンテンツは `src/site-content/**/*.ts` に集約する
 - ページ側に文言を直書きしすぎない
 - JSは最小限にとどめる
 - 既存構成を壊さず、不要な依存は追加しない
 
 ## 期待成果物
 - 動作するAstroページ一式
-- `src/content/site.ts`
-- `src/content/services.ts`
-- `src/content/pricing.ts`
-- `src/content/faq.ts`
-- `src/content/contact.ts`
+- `src/site-content/en/site.ts` などロケール別
+- `src/site-content/.../services.ts`
+- `src/site-content/.../pricing.ts`
+- `src/site-content/.../faq.ts`
+- `src/site-content/.../contact.ts`
 - 共通レイアウト / 共通コンポーネント
 - 5ページのルーティング実装
 
